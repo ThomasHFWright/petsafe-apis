@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "48204051-96d10898-652e-49e2-a92c-8870ae2e998b",
 		"name": "PetSafe Cloud API",
-		"description": "Authentication plus Smart Feed and ScoopFree device calls that mirror the official PetSafe Python SDK.",
+		"description": "Authentication plus Smart Feed and ScoopFree device calls.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
