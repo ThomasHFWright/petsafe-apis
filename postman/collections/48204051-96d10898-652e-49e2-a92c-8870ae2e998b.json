@@ -1,0 +1,1111 @@
+{
+	"info": {
+		"_postman_id": "48204051-96d10898-652e-49e2-a92c-8870ae2e998b",
+		"name": "PetSafe Cloud API",
+		"description": "Authentication plus Smart Feed and ScoopFree device calls that mirror the official PetSafe Python SDK.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Request Login Code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Received 200 from Cognito\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const data = pm.response.json();",
+									"pm.environment.set(\"session\", data.Session || \"\");",
+									"pm.environment.set(\"challenge_name\", data.ChallengeName || \"\");",
+									"const username = (data.ChallengeParameters && data.ChallengeParameters.USERNAME) || pm.environment.get(\"email\");",
+									"if (username) {",
+									"    pm.environment.set(\"username\", username);",
+									"}",
+									"pm.environment.unset(\"id_token\");",
+									"pm.environment.unset(\"access_token\");",
+									"pm.environment.unset(\"refresh_token\");",
+									"pm.environment.unset(\"token_received_at\");",
+									"pm.environment.unset(\"token_expires_in\");",
+									"pm.environment.unset(\"token_expires_at\");",
+									"pm.environment.unset(\"token_expires_at_epoch\");",
+									"if (data.ChallengeName) {",
+									"    pm.test(\"Challenge is CUSTOM_CHALLENGE\", function () {",
+									"        pm.expect(data.ChallengeName).to.eql(\"CUSTOM_CHALLENGE\");",
+									"    });",
+									"}"
+								],
+								"id": "c9a62637-add2-4d2f-9338-2c8aed3804d1"
+							}
+						}
+					],
+					"id": "48204051-5fe565cb-8b58-4efd-b780-313fa5272e88",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-amz-json-1.1"
+							},
+							{
+								"key": "X-Amz-Target",
+								"value": "AWSCognitoIdentityProviderService.InitiateAuth"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"AuthFlow\": \"CUSTOM_AUTH\",\n  \"AuthParameters\": {\n    \"USERNAME\": \"{{email}}\",\n    \"AuthFlow\": \"CUSTOM_CHALLENGE\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{cognito_base_url}}",
+							"host": [
+								"{{cognito_base_url}}"
+							]
+						},
+						"description": "Request the one-time verification code via email."
+					},
+					"response": []
+				},
+				{
+					"name": "Exchange Code for Tokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Received tokens from Cognito\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const data = pm.response.json();",
+									"if (!data.AuthenticationResult) {",
+									"    throw new Error(\"AuthenticationResult missing from response.\");",
+									"}",
+									"const auth = data.AuthenticationResult;",
+									"if (data.Session) {",
+									"    pm.environment.set(\"session\", data.Session);",
+									"}",
+									"pm.environment.set(\"id_token\", auth.IdToken || \"\");",
+									"pm.environment.set(\"access_token\", auth.AccessToken || \"\");",
+									"if (auth.RefreshToken) {",
+									"    pm.environment.set(\"refresh_token\", auth.RefreshToken);",
+									"}",
+									"pm.environment.set(\"token_received_at\", new Date().toISOString());",
+									"if (auth.ExpiresIn) {",
+									"    pm.environment.set(\"token_expires_in\", auth.ExpiresIn.toString());",
+									"    const expiresAtMs = Date.now() + Number(auth.ExpiresIn) * 1000;",
+									"    pm.environment.set(\"token_expires_at_epoch\", expiresAtMs.toString());",
+									"    pm.environment.set(\"token_expires_at\", new Date(expiresAtMs).toISOString());",
+									"}",
+									"pm.test(\"id_token stored\", function () {",
+									"    pm.expect(pm.environment.get(\"id_token\")).to.not.be.empty;",
+									"});",
+									"pm.test(\"refresh_token stored\", function () {",
+									"    pm.expect(pm.environment.get(\"refresh_token\")).to.not.be.empty;",
+									"});"
+								],
+								"id": "059c8813-7ede-4538-94de-f704840bfc49"
+							}
+						}
+					],
+					"id": "48204051-265a9190-e853-4af5-b4c4-5687366ec590",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-amz-json-1.1"
+							},
+							{
+								"key": "X-Amz-Target",
+								"value": "AWSCognitoIdentityProviderService.RespondToAuthChallenge"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"ChallengeName\": \"{{challenge_name}}\",\n  \"Session\": \"{{session}}\",\n  \"ChallengeResponses\": {\n    \"USERNAME\": \"{{username}}\",\n    \"ANSWER\": \"{{verification_code}}\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{cognito_base_url}}",
+							"host": [
+								"{{cognito_base_url}}"
+							]
+						},
+						"description": "Submit the verification code to receive id/access/refresh tokens."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Tokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Refresh succeeded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const data = pm.response.json();",
+									"if (!data.AuthenticationResult) {",
+									"    throw new Error(\"AuthenticationResult missing from refresh response.\");",
+									"}",
+									"const auth = data.AuthenticationResult;",
+									"pm.environment.set(\"id_token\", auth.IdToken || pm.environment.get(\"id_token\") || \"\");",
+									"pm.environment.set(\"access_token\", auth.AccessToken || pm.environment.get(\"access_token\") || \"\");",
+									"if (auth.RefreshToken) {",
+									"    pm.environment.set(\"refresh_token\", auth.RefreshToken);",
+									"}",
+									"pm.environment.set(\"token_received_at\", new Date().toISOString());",
+									"if (auth.ExpiresIn) {",
+									"    pm.environment.set(\"token_expires_in\", auth.ExpiresIn.toString());",
+									"    const expiresAtMs = Date.now() + Number(auth.ExpiresIn) * 1000;",
+									"    pm.environment.set(\"token_expires_at_epoch\", expiresAtMs.toString());",
+									"    pm.environment.set(\"token_expires_at\", new Date(expiresAtMs).toISOString());",
+									"}",
+									"if (data.Session) {",
+									"    pm.environment.set(\"session\", data.Session);",
+									"}"
+								],
+								"id": "e0888985-7f3b-4848-9002-987fd7fb8333"
+							}
+						}
+					],
+					"id": "48204051-e676112a-89f0-405c-a392-6770e9cadf6b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-amz-json-1.1"
+							},
+							{
+								"key": "X-Amz-Target",
+								"value": "AWSCognitoIdentityProviderService.InitiateAuth"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"AuthFlow\": \"REFRESH_TOKEN_AUTH\",\n  \"AuthParameters\": {\n    \"REFRESH_TOKEN\": \"{{refresh_token}}\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{cognito_base_url}}",
+							"host": [
+								"{{cognito_base_url}}"
+							]
+						},
+						"description": "Use the stored refresh token to obtain a new id/access token pair."
+					},
+					"response": []
+				}
+			],
+			"id": "48204051-f45a3be3-d07b-4d36-ac42-ac97f92ec247",
+			"description": "Request login codes, exchange them for tokens, and refresh credentials via AWS Cognito."
+		},
+		{
+			"name": "Pet Feeders (Smart Feed)",
+			"item": [
+				{
+					"name": "List Feeders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Feeders fetched\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const feeders = pm.response.json();",
+									"if (Array.isArray(feeders) && feeders.length > 0) {",
+									"    const first = feeders[0];",
+									"    if (first.thing_name) {",
+									"        pm.environment.set(\"smartfeed_thing_name\", first.thing_name);",
+									"    }",
+									"    if (first.id) {",
+									"        pm.environment.set(\"smartfeed_last_feeder_id\", first.id.toString());",
+									"    }",
+									"}"
+								],
+								"id": "ff84c29a-426e-4477-b37e-2d8e9e371517"
+							}
+						}
+					],
+					"id": "48204051-6556f1b8-238b-4f6a-81cb-63966f936d23",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders"
+							]
+						},
+						"description": "Retrieve all Smart Feed devices linked to the account."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Feeder Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Feeder detail loaded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const details = pm.response.json();",
+									"if (details && details.thing_name) {",
+									"    pm.environment.set(\"smartfeed_thing_name\", details.thing_name);",
+									"}",
+									"if (details && details.id) {",
+									"    pm.environment.set(\"smartfeed_last_feeder_id\", details.id.toString());",
+									"}"
+								],
+								"id": "ecc7e7e8-1032-4fbd-bd3e-0c435d791e23"
+							}
+						}
+					],
+					"id": "48204051-14d29c34-1381-4a39-b804-6fb738018970",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								""
+							]
+						},
+						"description": "Load the latest state for the selected Smart Feed (set smartfeed_thing_name first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Feed Now",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Feed request accepted\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "d989ceee-2b2b-4d78-9f49-26390922b717"
+							}
+						}
+					],
+					"id": "48204051-2940c77b-e49e-4140-89c0-0e3ca2621b91",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": {{smartfeed_amount}},\n  \"slow_feed\": {{smartfeed_slow_feed}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/meals",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"meals"
+							]
+						},
+						"description": "Dispense a meal immediately. amount is in 1/8 cup increments; set slow_feed to true to enable slow mode."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Feeder Messages",
+					"id": "48204051-735ea598-0463-411a-b008-9416a90e4b1c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/messages?days={{smartfeed_message_days}}",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "days",
+									"value": "{{smartfeed_message_days}}"
+								}
+							]
+						},
+						"description": "Pull recent messages from the feeder (defaults to the last 7 days)."
+					},
+					"response": []
+				},
+				{
+					"name": "List Feeding Schedules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Schedules fetched\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const schedules = pm.response.json();",
+									"if (Array.isArray(schedules) && schedules.length > 0) {",
+									"    const first = schedules[0];",
+									"    if (first.id) {",
+									"        pm.environment.set(\"smartfeed_schedule_id\", first.id.toString());",
+									"    }",
+									"}"
+								],
+								"id": "9ddc00a6-e14f-460e-bfcd-270b10a26578"
+							}
+						}
+					],
+					"id": "48204051-01d6327b-111e-4c62-9df6-0fabf7848eab",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/schedules",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"schedules"
+							]
+						},
+						"description": "Retrieve all scheduled feeds for the selected Smart Feed."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Feeding Schedule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Schedule created\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});",
+									"const created = pm.response.json();",
+									"if (created && created.id) {",
+									"    pm.environment.set(\"smartfeed_schedule_id\", created.id.toString());",
+									"}"
+								],
+								"id": "bab92662-a40d-4ca6-801e-123e0119cc60"
+							}
+						}
+					],
+					"id": "48204051-c9e383ba-8e68-45a5-a199-dfb6af8b1a53",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"time\": \"{{smartfeed_schedule_time}}\",\n  \"amount\": {{smartfeed_schedule_amount}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/schedules",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"schedules"
+							]
+						},
+						"description": "Create a new scheduled feed. Time must be 24-hour HH:MM."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Feeding Schedule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Schedule updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "c7ef5494-1a14-4790-9ba9-45899e29a04d"
+							}
+						}
+					],
+					"id": "48204051-3e6204b3-031c-4b1d-b163-f3f7861f7c22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"time\": \"{{smartfeed_schedule_time}}\",\n  \"amount\": {{smartfeed_schedule_amount}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/schedules/{{smartfeed_schedule_id}}",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"schedules",
+								"{{smartfeed_schedule_id}}"
+							]
+						},
+						"description": "Update the selected scheduled feed."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Feeding Schedule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Schedule deleted\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "75f7388c-4453-4bc2-ba01-5139f89ab2b7"
+							}
+						}
+					],
+					"id": "48204051-f4d23a5f-f548-4d10-809b-4be204006c79",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/schedules/{{smartfeed_schedule_id}}",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"schedules",
+								"{{smartfeed_schedule_id}}"
+							]
+						},
+						"description": "Delete the specified scheduled feed."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Feeding Schedules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"All schedules deleted\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "c01a1202-7c91-48e3-a45f-4b712a8a4c67"
+							}
+						}
+					],
+					"id": "48204051-ada3c302-dabc-41b5-b6d5-6a4e467663ef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/schedules",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"schedules"
+							]
+						},
+						"description": "Remove every scheduled feed from the selected Smart Feed."
+					},
+					"response": []
+				},
+				{
+					"name": "Pause or Resume All Schedules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Pause state updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "a7d36b29-e5ae-48c1-ad4b-0713586193fe"
+							}
+						}
+					],
+					"id": "48204051-66167035-2f66-437c-add2-bed697908565",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": {{smartfeed_pause_value}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/settings/paused",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"settings",
+								"paused"
+							]
+						},
+						"description": "Set the global paused flag for the feeder's schedules (true pauses, false resumes)."
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Child Lock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Child lock updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "9df99b36-e2bf-4964-bfd0-5723e9d5721b"
+							}
+						}
+					],
+					"id": "48204051-0764ad26-98ab-431a-9893-48c2d48ca2c0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": {{smartfeed_child_lock}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/settings/child_lock",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"settings",
+								"child_lock"
+							]
+						},
+						"description": "Enable or disable the physical button lock."
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Slow Feed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Slow feed updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "d1e85147-38ed-43c0-8d8f-e1d494aeffa0"
+							}
+						}
+					],
+					"id": "48204051-bd18fdf8-e95d-4785-b32f-91447c73718c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": {{smartfeed_slow_feed_setting}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smart-feed/feeders/{{smartfeed_thing_name}}/settings/slow_feed",
+							"host": [
+								"{{petsafe_base_url}}smart-feed"
+							],
+							"path": [
+								"feeders",
+								"{{smartfeed_thing_name}}",
+								"settings",
+								"slow_feed"
+							]
+						},
+						"description": "Enable or disable the slow-feed mode."
+					},
+					"response": []
+				}
+			],
+			"id": "48204051-798c543d-1b8c-4324-b3f9-c65a718542e9",
+			"description": "Interact with Smart Feed devices using the Cognito id_token for Authorization.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const idToken = pm.environment.get(\"id_token\");",
+							"if (!idToken) {",
+							"    console.warn(\"id_token is missing. Run the authentication flow first.\");",
+							"} else {",
+							"    pm.request.headers.upsert({ key: \"Authorization\", value: idToken });",
+							"}",
+							"if (pm.request.body && pm.request.body.mode === \"raw\") {",
+							"    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });",
+							"}",
+							"const expiresAtEpoch = parseInt(pm.environment.get(\"token_expires_at_epoch\") || \"0\", 10);",
+							"if (expiresAtEpoch && Date.now() > expiresAtEpoch - 60000) {",
+							"    console.warn(\"id_token is expired or will expire in <60s. Refresh tokens before continuing.\");",
+							"}"
+						],
+						"id": "0f207b5a-ee04-47a9-9dd6-3c3a7a8fe4bd"
+					}
+				}
+			]
+		},
+		{
+			"name": "Litter Boxes (Scoopfree)",
+			"item": [
+				{
+					"name": "List Litterboxes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Litterboxes fetched\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const payload = pm.response.json();",
+									"const boxes = Array.isArray(payload && payload.data) ? payload.data : (Array.isArray(payload) ? payload : []);",
+									"if (Array.isArray(boxes) && boxes.length > 0) {",
+									"    const first = boxes[0];",
+									"    if (first.thingName) {",
+									"        pm.environment.set(\"scoopfree_thing_name\", first.thingName);",
+									"    }",
+									"    if (first.productId) {",
+									"        pm.environment.set(\"scoopfree_last_product_id\", first.productId.toString());",
+									"    }",
+									"}"
+								],
+								"id": "194a9821-3a4e-4fab-a559-e237f4646897"
+							}
+						}
+					],
+					"id": "48204051-eccb1672-b65e-48e2-aa19-4659e9938ec5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product"
+							]
+						},
+						"description": "List all connected ScoopFree litter boxes."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Litterbox Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Litterbox detail loaded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const details = pm.response.json();",
+									"if (details && details.thingName) {",
+									"    pm.environment.set(\"scoopfree_thing_name\", details.thingName);",
+									"}",
+									"if (details && details.productId) {",
+									"    pm.environment.set(\"scoopfree_last_product_id\", details.productId.toString());",
+									"}"
+								],
+								"id": "defc9ee3-0f01-4dd2-9c91-b0b05c54fd3c"
+							}
+						}
+					],
+					"id": "48204051-09aea7f0-0d91-4df3-8b23-5221d6557a13",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								""
+							]
+						},
+						"description": "Retrieve current state for the selected ScoopFree unit."
+					},
+					"response": []
+				},
+				{
+					"name": "Trigger Rake Now",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Rake command accepted\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "b68e7874-6891-42d5-b407-7ac6f64df78b"
+							}
+						}
+					],
+					"id": "48204051-bde2770e-6904-4fb8-b876-098963d530f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/rake-now",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"rake-now"
+							]
+						},
+						"description": "Start an immediate raking cycle."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Rake Counter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Rake count updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "297b9a27-1e5f-47d0-ac24-69c0ec93a8c7"
+							}
+						}
+					],
+					"id": "48204051-8df033cc-e887-446f-b5c6-0538d99d8368",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rakeCount\": {{scoopfree_rake_count}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/shadow",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"shadow"
+							]
+						},
+						"description": "Reset the rake counter to the provided value."
+					},
+					"response": []
+				},
+				{
+					"name": "Set Rake Delay",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Rake delay updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "e3ea4e11-38b8-4e1c-866f-d3f653a160f4"
+							}
+						}
+					],
+					"id": "48204051-dec2fbcf-6dfb-4b19-8b11-00022d52ce61",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rakeDelayTime\": {{scoopfree_rake_delay}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/shadow",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"shadow"
+							]
+						},
+						"description": "Adjust the rake delay (minutes) for the ScoopFree unit."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Litterbox Activity",
+					"id": "48204051-da88f6ec-1aea-4064-8734-40d1ab29250d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/activity",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"activity"
+							]
+						},
+						"description": "Fetch the recent activity log for the litter box."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Litterbox Setting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Setting updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63"
+							}
+						}
+					],
+					"id": "48204051-ac893d94-a308-4f84-ac5a-ed25361975a8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"{{scoopfree_setting_key}}\": {{scoopfree_setting_value}}\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/settings",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"settings"
+							]
+						},
+						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
+					},
+					"response": []
+				}
+			],
+			"id": "48204051-79afb2b7-9822-4729-b4b1-388825ca5b2a",
+			"description": "Operate ScoopFree litter boxes using the Cognito id_token.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const idToken = pm.environment.get(\"id_token\");",
+							"if (!idToken) {",
+							"    console.warn(\"id_token is missing. Run the authentication flow first.\");",
+							"} else {",
+							"    pm.request.headers.upsert({ key: \"Authorization\", value: idToken });",
+							"}",
+							"if (pm.request.body && pm.request.body.mode === \"raw\") {",
+							"    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });",
+							"}",
+							"const expiresAtEpoch = parseInt(pm.environment.get(\"token_expires_at_epoch\") || \"0\", 10);",
+							"if (expiresAtEpoch && Date.now() > expiresAtEpoch - 60000) {",
+							"    console.warn(\"id_token is expired or will expire in <60s. Refresh tokens before continuing.\");",
+							"}"
+						],
+						"id": "26618f91-cb61-4b6a-9d7b-6b032389d97b"
+					}
+				}
+			]
+		}
+	]
+}
