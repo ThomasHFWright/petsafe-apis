@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "48204051-96d10898-652e-49e2-a92c-8870ae2e998b",
 		"name": "PetSafe Cloud API",
-		"description": "Authentication plus Smart Feed and ScoopFree device calls.",
+		"description": "PetSafe authentication and device calls.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -72,7 +72,59 @@
 						},
 						"description": "Request the one-time verification code via email."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-dfb68d78-1514-4cf7-8ca2-723e6490b40e",
+							"name": "Request Login Code",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-amz-json-1.1"
+									},
+									{
+										"key": "X-Amz-Target",
+										"value": "AWSCognitoIdentityProviderService.InitiateAuth"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"AuthFlow\": \"CUSTOM_AUTH\",\n  \"AuthParameters\": {\n    \"USERNAME\": \"{{email}}\",\n    \"AuthFlow\": \"CUSTOM_CHALLENGE\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{cognito_base_url}}",
+									"host": [
+										"{{cognito_base_url}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"ChallengeName\": \"CUSTOM_CHALLENGE\",\n    \"ChallengeParameters\": {\n        \"USERNAME\": \"example-value\",\n        \"attempts\": \"1\"\n    },\n    \"Session\": \"sessionid\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Exchange Code for Tokens",
@@ -80,7 +132,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "059c8813-7ede-4538-94de-f704840bfc49",
 								"exec": [
 									"pm.test(\"Received tokens from Cognito\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -112,7 +164,8 @@
 									"    pm.expect(pm.environment.get(\"refresh_token\")).to.not.be.empty;",
 									"});"
 								],
-								"id": "059c8813-7ede-4538-94de-f704840bfc49"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -144,7 +197,59 @@
 						},
 						"description": "Submit the verification code to receive id/access/refresh tokens."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-40449b50-cf41-4f17-b9b6-f4a53358471e",
+							"name": "Exchange Code for Tokens",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-amz-json-1.1"
+									},
+									{
+										"key": "X-Amz-Target",
+										"value": "AWSCognitoIdentityProviderService.RespondToAuthChallenge"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"ChallengeName\": \"{{challenge_name}}\",\n  \"Session\": \"{{session}}\",\n  \"ChallengeResponses\": {\n    \"USERNAME\": \"{{username}}\",\n    \"ANSWER\": \"{{verification_code}}\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{cognito_base_url}}",
+									"host": [
+										"{{cognito_base_url}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"AuthenticationResult\": {\n        \"AccessToken\": \"accesstoken\",\n        \"ExpiresIn\": 3600,\n        \"IdToken\": \"idtoken\",\n        \"RefreshToken\": \"refreshtoken\",\n        \"TokenType\": \"Bearer\"\n    },\n    \"ChallengeParameters\": {}\n}"
+						}
+					]
 				},
 				{
 					"name": "Refresh Tokens",
@@ -210,7 +315,59 @@
 						},
 						"description": "Use the stored refresh token to obtain a new id/access token pair."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-12ac76f4-ebe8-4a64-b11d-f9aebd55b243",
+							"name": "Refresh Tokens",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-amz-json-1.1"
+									},
+									{
+										"key": "X-Amz-Target",
+										"value": "AWSCognitoIdentityProviderService.InitiateAuth"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ClientId\": \"{{client_id}}\",\n  \"AuthFlow\": \"REFRESH_TOKEN_AUTH\",\n  \"AuthParameters\": {\n    \"REFRESH_TOKEN\": \"{{refresh_token}}\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{cognito_base_url}}",
+									"host": [
+										"{{cognito_base_url}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"AuthenticationResult\": {\n        \"AccessToken\": \"accesstoken\",\n        \"ExpiresIn\": 3600,\n        \"IdToken\": \"idtoken\",\n        \"TokenType\": \"Bearer\"\n    },\n    \"ChallengeParameters\": {}\n}"
+						}
+					]
 				}
 			],
 			"id": "48204051-f45a3be3-d07b-4d36-ac42-ac97f92ec247",
@@ -1103,6 +1260,1018 @@
 							"}"
 						],
 						"id": "26618f91-cb61-4b6a-9d7b-6b032389d97b"
+					}
+				}
+			]
+		},
+		{
+			"name": "SmartDoor",
+			"item": [
+				{
+					"name": "List SmartDoors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "194a9821-3a4e-4fab-a559-e237f4646897",
+								"exec": [
+									"pm.test(\"Litterboxes fetched\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const payload = pm.response.json();",
+									"const boxes = Array.isArray(payload && payload.data) ? payload.data : (Array.isArray(payload) ? payload : []);",
+									"if (Array.isArray(boxes) && boxes.length > 0) {",
+									"    const first = boxes[0];",
+									"    if (first.thingName) {",
+									"        pm.environment.set(\"smartdoor_thing_name\", first.thingName);",
+									"    }",
+									"    if (first.productId) {",
+									"        pm.environment.set(\"smartdoor_last_product_id\", first.productId.toString());",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-e4b7b3ad-271a-427f-a8d2-24e2a7edc1d1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product"
+							]
+						},
+						"description": "List all connected ScoopFree litter boxes."
+					},
+					"response": [
+						{
+							"id": "48204051-4b8dd1f3-7a65-4798-924c-6467d06cb38e",
+							"name": "List Litterboxes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"productType\": \"smartdoor\",\n            \"thingName\": \"example-value\",\n            \"schedules\": [\n                {\n                    \"thingName\": \"example-value\",\n                    \"petIds\": [\n                        \"example-value\",\n                        \"example-value\"\n                    ],\n                    \"scheduleId\": \"example-value\",\n                    \"startTime\": \"00:00\",\n                    \"access\": 3,\n                    \"dayOfWeek\": \"1111111\",\n                    \"scheduleType\": \"SMART\",\n                    \"isEnabled\": true,\n                    \"title\": \"Event\",\n                    \"nextActionAt\": 1759273200000,\n                    \"prevActionAt\": 1759186859000\n                },\n                {\n                    \"thingName\": \"example-value\",\n                    \"petIds\": [\n                        \"example-value\",\n                        \"example-value\",\n                        \"example-value\"\n                    ],\n                    \"scheduleId\": \"example-value\",\n                    \"startTime\": \"08:00\",\n                    \"access\": 3,\n                    \"dayOfWeek\": \"1111111\",\n                    \"scheduleType\": \"SMART\",\n                    \"isEnabled\": true,\n                    \"title\": \"Cats allowed out\",\n                    \"nextActionAt\": 1759302000000,\n                    \"prevActionAt\": 1759215659000\n                },\n                {\n                    \"thingName\": \"example-value\",\n                    \"petIds\": [\n                        \"example-value\",\n                        \"example-value\",\n                        \"example-value\"\n                    ],\n                    \"scheduleId\": \"example-value\",\n                    \"startTime\": \"19:30\",\n                    \"access\": 2,\n                    \"dayOfWeek\": \"1111111\",\n                    \"scheduleType\": \"SMART\",\n                    \"isEnabled\": true,\n                    \"title\": \"Cats in at night\",\n                    \"nextActionAt\": 1759257000000,\n                    \"prevActionAt\": 1759170659000\n                }\n            ],\n            \"shadow\": {\n                \"state\": {\n                    \"reported\": {\n                        \"productVariant\": \"MEDIUM\",\n                        \"connectionStatus\": \"online\",\n                        \"systemStatus\": {\n                            \"firmware\": \"v2.1.12\",\n                            \"rssi\": -46\n                        },\n                        \"door\": {\n                            \"mode\": \"MANUAL_UNLOCKED\",\n                            \"latchState\": \"UNLOCKED\",\n                            \"errorState\": \"NONE\"\n                        },\n                        \"power\": {\n                            \"hasAdapter\": true,\n                            \"batteryLevel\": 100,\n                            \"batteryVoltage\": 6347,\n                            \"finalAct\": \"UNLOCKED\"\n                        }\n                    },\n                    \"desired\": {\n                        \"power\": {\n                            \"thresholds\": [\n                                4500,\n                                4300,\n                                4150\n                            ],\n                            \"finalAct\": \"UNLOCKED\"\n                        }\n                    }\n                }\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get SmartDoor Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "defc9ee3-0f01-4dd2-9c91-b0b05c54fd3c",
+								"exec": [
+									"pm.test(\"Litterbox detail loaded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const details = pm.response.json();",
+									"if (details && details.thingName) {",
+									"    pm.environment.set(\"smartdoor_thing_name\", details.thingName);",
+									"}",
+									"if (details && details.productId) {",
+									"    pm.environment.set(\"smartdoor_last_product_id\", details.productId.toString());",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-7478570b-d23e-4445-922d-84c278e4295c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								""
+							]
+						},
+						"description": "Retrieve current state for the selected ScoopFree unit."
+					},
+					"response": [
+						{
+							"id": "48204051-d4d822de-01ca-47df-9ae0-8d8d7d4077f0",
+							"name": "Get Litterbox Details",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"productType\": \"smartdoor\",\n        \"thingName\": \"example-value\",\n        \"schedules\": [\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"00:00\",\n                \"access\": 3,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Event\",\n                \"nextActionAt\": 1759273200000,\n                \"prevActionAt\": 1759186859000\n            },\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"08:00\",\n                \"access\": 3,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Cats allowed out\",\n                \"nextActionAt\": 1759302000000,\n                \"prevActionAt\": 1759215659000\n            },\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"19:30\",\n                \"access\": 2,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Cats in at night\",\n                \"nextActionAt\": 1759257000000,\n                \"prevActionAt\": 1759170659000\n            }\n        ],\n        \"shadow\": {\n            \"state\": {\n                \"reported\": {\n                    \"productVariant\": \"MEDIUM\",\n                    \"connectionStatus\": \"online\",\n                    \"systemStatus\": {\n                        \"firmware\": \"v2.1.12\",\n                        \"rssi\": -46\n                    },\n                    \"door\": {\n                        \"mode\": \"MANUAL_UNLOCKED\",\n                        \"latchState\": \"UNLOCKED\",\n                        \"errorState\": \"NONE\"\n                    },\n                    \"power\": {\n                        \"hasAdapter\": true,\n                        \"batteryLevel\": 100,\n                        \"batteryVoltage\": 6347,\n                        \"finalAct\": \"UNLOCKED\"\n                    }\n                },\n                \"desired\": {\n                    \"power\": {\n                        \"thresholds\": [\n                            4500,\n                            4300,\n                            4150\n                        ],\n                        \"finalAct\": \"UNLOCKED\"\n                    }\n                }\n            }\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get SmartDoor Activity",
+					"id": "48204051-ff390800-05c0-4e04-bb8a-c9d45440bf0c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/activity",
+							"host": [
+								"{{petsafe_base_url}}scoopfree"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{scoopfree_thing_name}}",
+								"activity"
+							]
+						},
+						"description": "Fetch the recent activity log for the litter box."
+					},
+					"response": [
+						{
+							"id": "48204051-68ca3fc0-71b7-4432-a1af-f890a5ff02ac",
+							"name": "Get Litterbox Activity",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/activity",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"activity"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 2,\n                \"title\": \"Cats in at night\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-23T18:30:43.845Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-23T23:00:44.608Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Cats allowed out\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-24T07:00:45.043Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 2,\n                \"title\": \"Cats in at night\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-24T18:30:42.590Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-24T23:00:44.092Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Cats allowed out\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-25T07:00:45.198Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 2,\n                \"title\": \"Cats in at night\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-25T18:30:42.638Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-25T23:00:45.330Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Cats allowed out\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-26T07:00:44.687Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 2,\n                \"title\": \"Cats in at night\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-26T18:30:42.509Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-26T23:00:44.281Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Cats allowed out\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-27T07:00:44.257Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"USER_MODE_CHANGE_LOCKED\",\n            \"payload\": {\n                \"previousMode\": \"SMART\"\n            },\n            \"timestamp\": \"2025-09-27T16:15:37.044Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"USER_MODE_CHANGE_UNLOCKED\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_LOCKED\"\n            },\n            \"timestamp\": \"2025-09-27T16:15:41.110Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_SMART\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_UNLOCKED\"\n            },\n            \"timestamp\": \"2025-09-27T17:50:47.966Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 2,\n                \"title\": \"Cats in at night\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-27T18:30:42.681Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"PET_ENTERED\",\n            \"payload\": {\n                \"petId\": \"example-value\",\n                \"tagId\": \"example-value\",\n                \"groupId\": \"example-value\",\n                \"tagType\": \"FDXB\",\n                \"thingName\": \"example-value\",\n                \"rfId\": \"example-value\",\n                \"technology\": \"MICROCHIP\"\n            },\n            \"timestamp\": \"2025-09-27T22:03:01.190Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"ERROR_FLAP_STUCK\",\n            \"timestamp\": \"2025-09-27T22:03:05.359Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-27T23:00:45.060Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Cats allowed out\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-28T07:00:44.727Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_LOCKED\",\n            \"payload\": {\n                \"previousMode\": \"SMART\"\n            },\n            \"timestamp\": \"2025-09-28T08:16:20.645Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_UNLOCKED\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_LOCKED\"\n            },\n            \"timestamp\": \"2025-09-28T08:16:26.084Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_SMART\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_UNLOCKED\"\n            },\n            \"timestamp\": \"2025-09-28T20:40:27.637Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_SMART\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_UNLOCKED\"\n            },\n            \"timestamp\": \"2025-09-28T20:40:30.929Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_SMART\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_UNLOCKED\"\n            },\n            \"timestamp\": \"2025-09-28T20:40:31.136Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_SMART\",\n            \"payload\": {\n                \"previousMode\": \"SMART\"\n            },\n            \"timestamp\": \"2025-09-28T20:41:03.785Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"SCHEDULE_STARTED\",\n            \"payload\": {\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"access\": 3,\n                \"title\": \"Event\",\n                \"scheduleId\": \"example-value\"\n            },\n            \"timestamp\": \"2025-09-28T23:00:44.899Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_LOCKED\",\n            \"payload\": {\n                \"previousMode\": \"SMART\"\n            },\n            \"timestamp\": \"2025-09-29T06:04:12.706Z\"\n        },\n        {\n            \"thingName\": \"example-value\",\n            \"code\": \"CLOUD_MODE_CHANGE_UNLOCKED\",\n            \"payload\": {\n                \"previousMode\": \"MANUAL_LOCKED\"\n            },\n            \"timestamp\": \"2025-09-29T06:04:18.142Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Lock SmartDoor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63",
+								"exec": [
+									"pm.test(\"Setting updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f36cbedc-aba5-4a29-8227-b9724db7a4eb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-260890da-9dc4-4af3-b6da-3fa812c92433",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								"shadow"
+							]
+						},
+						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
+					},
+					"response": [
+						{
+							"id": "48204051-2be66b6d-d659-46ca-9f71-bfac75c25d95",
+							"name": "Lock SmartDoor",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"shadow"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -46\n                },\n                \"door\": {\n                    \"mode\": \"MANUAL_UNLOCKED\",\n                    \"latchState\": \"UNLOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6345,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"door\": {\n                    \"mode\": \"MANUAL_LOCKED\"\n                },\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Unlock SmartDoor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63",
+								"exec": [
+									"pm.test(\"Setting updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f36cbedc-aba5-4a29-8227-b9724db7a4eb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-41cdad5e-a2c9-4820-bda1-cbf3b81df663",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								"shadow"
+							]
+						},
+						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
+					},
+					"response": [
+						{
+							"id": "48204051-d7caf383-a115-4f96-b03e-4d51dc52b4fc",
+							"name": "Unlock SmartDoor",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_UNLOCKED\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"shadow"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -45\n                },\n                \"door\": {\n                    \"mode\": \"MANUAL_LOCKED\",\n                    \"latchState\": \"LOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6345,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"door\": {\n                    \"mode\": \"MANUAL_UNLOCKED\"\n                },\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "SmartDoor Smart mode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63",
+								"exec": [
+									"pm.test(\"Setting updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f36cbedc-aba5-4a29-8227-b9724db7a4eb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-65a1e490-1c59-435e-9f7c-8ebdfd07a643",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"door\": {\n    \"mode\": \"SMART\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								"shadow"
+							]
+						},
+						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
+					},
+					"response": [
+						{
+							"id": "48204051-c7dd5df7-1408-4a08-9e2b-ff1a056334aa",
+							"name": "Lock SmartDoor",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"shadow"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -46\n                },\n                \"door\": {\n                    \"mode\": \"MANUAL_UNLOCKED\",\n                    \"latchState\": \"UNLOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6345,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"door\": {\n                    \"mode\": \"MANUAL_LOCKED\"\n                },\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "48204051-f4191ac9-a5bc-48ff-a2f1-3631f71044d9",
+			"description": "Operate ScoopFree litter boxes using the Cognito id_token.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const idToken = pm.environment.get(\"id_token\");",
+							"if (!idToken) {",
+							"    console.warn(\"id_token is missing. Run the authentication flow first.\");",
+							"} else {",
+							"    pm.request.headers.upsert({ key: \"Authorization\", value: idToken });",
+							"}",
+							"if (pm.request.body && pm.request.body.mode === \"raw\") {",
+							"    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });",
+							"}",
+							"const expiresAtEpoch = parseInt(pm.environment.get(\"token_expires_at_epoch\") || \"0\", 10);",
+							"if (expiresAtEpoch && Date.now() > expiresAtEpoch - 60000) {",
+							"    console.warn(\"id_token is expired or will expire in <60s. Refresh tokens before continuing.\");",
+							"}"
+						],
+						"id": "26618f91-cb61-4b6a-9d7b-6b032389d97b"
+					}
+				}
+			]
+		},
+		{
+			"name": "Pets",
+			"item": [
+				{
+					"name": "List Pets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "194a9821-3a4e-4fab-a559-e237f4646897",
+								"exec": [
+									"pm.test(\"Pets fetched\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const payload = pm.response.json();\r",
+									"const boxes = Array.isArray(payload && payload.data) ? payload.data : (Array.isArray(payload) ? payload : []);\r",
+									"if (Array.isArray(boxes) && boxes.length > 0) {\r",
+									"    const first = boxes[0];\r",
+									"    if (first.petId) {\r",
+									"        pm.environment.set(\"petId\", first.petId.toString());\r",
+									"    }\r",
+									"    if (first.profile.name) {\r",
+									"        pm.environment.set(\"petName\", first.profile.name.toString());\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6620c47f-cf0e-4398-82e7-581c80a0434c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "48204051-551775eb-db91-4a79-8a35-d79b1c1bdd6c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}pets/pets",
+							"host": [
+								"{{petsafe_base_url}}pets"
+							],
+							"path": [
+								"pets"
+							]
+						},
+						"description": "List all connected ScoopFree litter boxes."
+					},
+					"response": [
+						{
+							"id": "48204051-c375479a-189a-405b-b1ed-44f54c1cc337",
+							"name": "List Pets",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}pets/pets",
+									"host": [
+										"{{petsafe_base_url}}pets"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"data\": [\n    {\n      \"deleted\": false,\n      \"updatedAt\": \"2025-09-14T16:32:19.810Z\",\n      \"petId\": \"example-value\",\n      \"profile\": {\n        \"birthday\": \"01/01/2024\",\n        \"unit\": \"metric\",\n        \"gender\": 0,\n        \"petType\": \"Cat\",\n        \"name\": \"Tailwag\",\n        \"weight\": 2.92,\n        \"breed\": []\n      },\n      \"createdAt\": \"2025-09-14T16:32:19.755Z\",\n      \"updatedBy\": \"example-value\",\n      \"createdBy\": \"example-value\",\n      \"technologies\": [\n        {\n          \"tagId\": \"example-value\",\n          \"technology\": \"MICROCHIP\",\n          \"frequency\": \"FDXB\"\n        }\n      ]\n    },\n    {\n      \"deleted\": false,\n      \"updatedAt\": \"2025-09-14T16:34:04.269Z\",\n      \"petId\": \"example-value\",\n      \"profile\": {\n        \"name\": \"Porko\",\n        \"birthday\": \"08/01/2001\",\n        \"gender\": 1,\n        \"breed\": [\n          \"Portuguese Poden\"\n        ],\n        \"petType\": \"Dog\"\n      },\n      \"createdAt\": \"2025-09-14T16:34:04.241Z\",\n      \"updatedBy\": \"example-value\",\n      \"createdBy\": \"example-value\",\n      \"technologies\": [\n        {\n          \"tagId\": \"example-value\",\n          \"technology\": \"PETSAFE_KEY\",\n          \"frequency\": \"FDXB\"\n        }\n      ]\n    },\n    {\n      \"deleted\": false,\n      \"updatedAt\": \"2025-09-14T16:31:19.390Z\",\n      \"petId\": \"example-value\",\n      \"profile\": {\n        \"birthday\": \"08/01/2021\",\n        \"unit\": \"metric\",\n        \"gender\": 0,\n        \"petType\": \"Cat\",\n        \"name\": \"Figwig\",\n        \"weight\": 4.19,\n        \"breed\": [\n          \"Siamese\"\n        ]\n      },\n      \"createdAt\": \"2025-09-14T16:31:19.298Z\",\n      \"updatedBy\": \"example-value\",\n      \"createdBy\": \"example-value\",\n      \"technologies\": [\n        {\n          \"tagId\": \"example-value\",\n          \"technology\": \"MICROCHIP\",\n          \"frequency\": \"FDXB\"\n        }\n      ]\n    },\n    {\n      \"deleted\": false,\n      \"updatedAt\": \"2025-09-14T16:33:09.350Z\",\n      \"petId\": \"example-value\",\n      \"profile\": {\n        \"birthday\": \"08/01/2021\",\n        \"unit\": \"metric\",\n        \"gender\": 0,\n        \"petType\": \"Dog\",\n        \"name\": \"Fofo\",\n        \"weight\": 12,\n        \"breed\": [\n          \"Other\"\n        ]\n      },\n      \"createdAt\": \"2025-09-14T16:33:09.304Z\",\n      \"updatedBy\": \"example-value\",\n      \"createdBy\": \"example-value\",\n      \"technologies\": [\n        {\n          \"tagId\": \"example-value\",\n          \"technology\": \"PETSAFE_KEY\",\n          \"frequency\": \"FDXB\"\n        }\n      ]\n    },\n    {\n      \"createdAt\": \"2025-09-14T16:30:33.870Z\",\n      \"createdBy\": \"example-value\",\n      \"deleted\": false,\n      \"petId\": \"example-value\",\n      \"profile\": {\n        \"birthday\": \"08/01/2021\",\n        \"unit\": \"metric\",\n        \"gender\": 0,\n        \"petType\": \"Cat\",\n        \"name\": \"Fluffy\",\n        \"weight\": 3.9,\n        \"breed\": [\n          \"Siamese\"\n        ]\n      },\n      \"updatedAt\": \"2025-09-14T16:30:34.015Z\",\n      \"updatedBy\": \"example-value\",\n      \"technologies\": [\n        {\n          \"tagId\": \"example-value\",\n          \"technology\": \"MICROCHIP\",\n          \"frequency\": \"FDXB\"\n        }\n      ]\n    }\n  ]\n}\n"
+						}
+					]
+				},
+				{
+					"name": "List Pet Products",
+					"id": "48204051-1bc713d7-ca90-40c0-9afe-2a354ebc3952",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}directory/petProduct?petId={{petId}}",
+							"host": [
+								"{{petsafe_base_url}}directory"
+							],
+							"path": [
+								"petProduct"
+							],
+							"query": [
+								{
+									"key": "petId",
+									"value": "{{petId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "48204051-d6874ce2-d9e1-41db-81cb-d0f3831debf2",
+							"name": "List Pet Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}directory/petProduct?petId={{petId}}",
+									"host": [
+										"{{petsafe_base_url}}directory"
+									],
+									"path": [
+										"petProduct"
+									],
+									"query": [
+										{
+											"key": "petId",
+											"value": "{{petId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"data\": [\n    {\n      \"aws:rep:deleting\": false,\n      \"productType\": \"smartdoor_1_large\",\n      \"deleted\": false,\n      \"updatedAt\": \"2025-09-20T09:17:50.374Z\",\n      \"groupId\": \"example-value\",\n      \"petId\": \"example-value\",\n      \"createdAt\": \"2025-09-20T09:17:50.374Z\",\n      \"updatedBy\": \"example-value\",\n      \"aws:rep:updateregion\": \"us-east-1\",\n      \"aws:rep:updatetime\": 1758359870.623001,\n      \"createdBy\": \"example-value\",\n      \"productId\": \"example-value\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			],
+			"id": "48204051-ae30340f-954a-4e81-ac2f-b66557075523",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1e0cc385-e719-4da8-a1ec-b0384f70c349",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"const idToken = pm.environment.get(\"id_token\");\r",
+							"if (!idToken) {\r",
+							"    console.warn(\"id_token is missing. Run the authentication flow first.\");\r",
+							"} else {\r",
+							"    pm.request.headers.upsert({ key: \"Authorization\", value: idToken });\r",
+							"}\r",
+							"if (pm.request.body && pm.request.body.mode === \"raw\") {\r",
+							"    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });\r",
+							"}\r",
+							"const expiresAtEpoch = parseInt(pm.environment.get(\"token_expires_at_epoch\") || \"0\", 10);\r",
+							"if (expiresAtEpoch && Date.now() > expiresAtEpoch - 60000) {\r",
+							"    console.warn(\"id_token is expired or will expire in <60s. Refresh tokens before continuing.\");\r",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad6e493e-ccab-44f0-9783-5c7472d147fc",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Product Sharing",
+					"id": "48204051-9f515155-8358-4883-a7cc-cf3b577a6420",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}directory/product-sharing",
+							"host": [
+								"{{petsafe_base_url}}directory"
+							],
+							"path": [
+								"product-sharing"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "48204051-cfc0d439-e110-447b-9ce3-d5a17df0a563",
+							"name": "Product Sharing",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Encoding",
+										"value": "gzip",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text"
+									},
+									{
+										"key": "User-Agent",
+										"value": "my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}directory/product-sharing",
+									"host": [
+										"{{petsafe_base_url}}directory"
+									],
+									"path": [
+										"product-sharing"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"email\": \"example@example.com\",\n            \"ownerId\": \"example-value\",\n            \"userId\": \"example-value\",\n            \"nickname\": \"example@example.com\",\n            \"status\": \"shared\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "48204051-c251a136-3d2a-4268-a8c4-efea796eb71c",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0e5dcdb5-f0a6-40bf-8fee-9623ad09864e",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"const idToken = pm.environment.get(\"id_token\");\r",
+							"if (!idToken) {\r",
+							"    console.warn(\"id_token is missing. Run the authentication flow first.\");\r",
+							"} else {\r",
+							"    pm.request.headers.upsert({ key: \"Authorization\", value: idToken });\r",
+							"}\r",
+							"if (pm.request.body && pm.request.body.mode === \"raw\") {\r",
+							"    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });\r",
+							"}\r",
+							"const expiresAtEpoch = parseInt(pm.environment.get(\"token_expires_at_epoch\") || \"0\", 10);\r",
+							"if (expiresAtEpoch && Date.now() > expiresAtEpoch - 60000) {\r",
+							"    console.warn(\"id_token is expired or will expire in <60s. Refresh tokens before continuing.\");\r",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d36577a9-ca9f-40d1-857d-6539be431c5a",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
 					}
 				}
 			]
