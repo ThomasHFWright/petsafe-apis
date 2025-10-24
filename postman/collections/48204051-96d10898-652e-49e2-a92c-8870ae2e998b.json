@@ -1673,7 +1673,7 @@
 					]
 				},
 				{
-					"name": "Get SmartDoor Activity Copy",
+					"name": "Get Override Schedules",
 					"id": "48204051-c4054921-6d3f-4bf5-a1dc-8b86712a8430",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
