@@ -1494,6 +1494,106 @@
 					]
 				},
 				{
+					"name": "Get SmartDoor Details Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "defc9ee3-0f01-4dd2-9c91-b0b05c54fd3c",
+								"exec": [
+									"pm.test(\"Litterbox detail loaded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const details = pm.response.json();",
+									"if (details && details.thingName) {",
+									"    pm.environment.set(\"smartdoor_thing_name\", details.thingName);",
+									"}",
+									"if (details && details.productId) {",
+									"    pm.environment.set(\"smartdoor_last_product_id\", details.productId.toString());",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-b6ff939d-2e5e-4614-b6c1-21d2ba26878b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								""
+							]
+						},
+						"description": "Retrieve current state for the selected ScoopFree unit."
+					},
+					"response": [
+						{
+							"id": "48204051-22d6dfcb-2ffa-4a55-851f-6980a71501a2",
+							"name": "Get Litterbox Details",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"productType\": \"smartdoor\",\n        \"thingName\": \"example-value\",\n        \"schedules\": [\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"00:00\",\n                \"access\": 3,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Event\",\n                \"nextActionAt\": 1759273200000,\n                \"prevActionAt\": 1759186859000\n            },\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"08:00\",\n                \"access\": 3,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Cats allowed out\",\n                \"nextActionAt\": 1759302000000,\n                \"prevActionAt\": 1759215659000\n            },\n            {\n                \"thingName\": \"example-value\",\n                \"petIds\": [\n                    \"example-value\",\n                    \"example-value\",\n                    \"example-value\"\n                ],\n                \"scheduleId\": \"example-value\",\n                \"startTime\": \"19:30\",\n                \"access\": 2,\n                \"dayOfWeek\": \"1111111\",\n                \"scheduleType\": \"SMART\",\n                \"isEnabled\": true,\n                \"title\": \"Cats in at night\",\n                \"nextActionAt\": 1759257000000,\n                \"prevActionAt\": 1759170659000\n            }\n        ],\n        \"shadow\": {\n            \"state\": {\n                \"reported\": {\n                    \"productVariant\": \"MEDIUM\",\n                    \"connectionStatus\": \"online\",\n                    \"systemStatus\": {\n                        \"firmware\": \"v2.1.12\",\n                        \"rssi\": -46\n                    },\n                    \"door\": {\n                        \"mode\": \"MANUAL_UNLOCKED\",\n                        \"latchState\": \"UNLOCKED\",\n                        \"errorState\": \"NONE\"\n                    },\n                    \"power\": {\n                        \"hasAdapter\": true,\n                        \"batteryLevel\": 100,\n                        \"batteryVoltage\": 6347,\n                        \"finalAct\": \"UNLOCKED\"\n                    }\n                },\n                \"desired\": {\n                    \"power\": {\n                        \"thresholds\": [\n                            4500,\n                            4300,\n                            4150\n                        ],\n                        \"finalAct\": \"UNLOCKED\"\n                    }\n                }\n            }\n        }\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "Get SmartDoor Activity",
 					"id": "48204051-ff390800-05c0-4e04-bb8a-c9d45440bf0c",
 					"protocolProfileBehavior": {
