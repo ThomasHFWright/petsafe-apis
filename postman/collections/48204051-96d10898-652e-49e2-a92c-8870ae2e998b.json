@@ -1751,6 +1751,84 @@
 					]
 				},
 				{
+					"name": "Get Override Schedules Copy",
+					"id": "48204051-f8d8c7b7-87e2-44df-8487-2dacac7866ad",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/override/schedules/{{smartdoor_thing_name}}",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"override",
+								"schedules",
+								"{{smartdoor_thing_name}}"
+							]
+						},
+						"description": "Fetch the recent activity log for the litter box."
+					},
+					"response": [
+						{
+							"id": "48204051-119b1287-e5b7-4111-b0a3-b675c29b34ca",
+							"name": "Get Override Schedules",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/activity",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"activity"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"thingName\": \"example-value\",\n        \"access\": 0\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "Lock SmartDoor",
 					"event": [
 						{
