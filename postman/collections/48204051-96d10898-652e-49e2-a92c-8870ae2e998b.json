@@ -1765,15 +1765,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{petsafe_base_url}}smartdoor/product/override/schedules/{{smartdoor_thing_name}}",
+							"raw": "{{petsafe_base_url}}smartdoor/product/schedules?thingName={{smartdoor_thing_name}}",
 							"host": [
 								"{{petsafe_base_url}}smartdoor"
 							],
 							"path": [
 								"product",
-								"override",
-								"schedules",
-								"{{smartdoor_thing_name}}"
+								"schedules"
+							],
+							"query": [
+								{
+									"key": "thingName",
+									"value": "{{smartdoor_thing_name}}"
+								}
 							]
 						},
 						"description": "Fetch the recent activity log for the litter box."
