@@ -1786,7 +1786,8 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						},
 						{
@@ -1797,7 +1798,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1810,7 +1812,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_UNLOCKED\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
