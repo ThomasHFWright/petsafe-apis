@@ -2572,7 +2572,7 @@
 					]
 				},
 				{
-					"name": "Update Final Act to Locked Copy",
+					"name": "Update Timezone",
 					"event": [
 						{
 							"listen": "test",
