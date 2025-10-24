@@ -2232,7 +2232,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"power\": {\n        \"finalAct\": \"LOCKED\"\n    }\n}",
+							"raw": "{\n    \"power\": {\n        \"finalAct\": \"UNLOCKED\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2256,7 +2256,7 @@
 					"response": [
 						{
 							"id": "48204051-fbb6d799-6d30-49d5-aa9d-8305ebb37c13",
-							"name": "Update Final Act",
+							"name": "Update Final Act to Unlocked",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
