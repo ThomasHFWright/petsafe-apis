@@ -2232,7 +2232,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"friendlyName\": \"Pet door\"\n}",
+							"raw": "{\n    \"power\": {\n        \"finalAct\": \"LOCKED\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2240,14 +2240,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
 							"host": [
-								"{{petsafe_base_url}}preferences"
+								"{{petsafe_base_url}}smartdoor"
 							],
 							"path": [
 								"product",
-								"smartdoor",
-								"{{smartdoor_thing_name}}"
+								"product",
+								"{{smartdoor_thing_name}}",
+								"shadow"
 							]
 						},
 						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
