@@ -3047,6 +3047,18 @@
 							"body": "{\n    \"error\": {\n        \"message\": \"smartdoor-schedule-conflict\",\n        \"statusCode\": 400,\n        \"detail\": {\n            \"pets\": [\n                \"example-value\"\n            ],\n            \"dayOfWeek\": \"1110101\"\n        }\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "New Request",
+					"id": "48204051-bf437534-60b2-4432-9e2b-90e133e2ff67",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "48204051-f4191ac9-a5bc-48ff-a2f1-3631f71044d9",
