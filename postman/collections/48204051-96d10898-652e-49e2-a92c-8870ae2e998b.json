@@ -1876,7 +1876,7 @@
 					]
 				},
 				{
-					"name": "Lock SmartDoor Copy",
+					"name": "Update Friendly Name",
 					"event": [
 						{
 							"listen": "test",
