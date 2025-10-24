@@ -371,7 +371,36 @@
 				}
 			],
 			"id": "48204051-f45a3be3-d07b-4d36-ac42-ac97f92ec247",
-			"description": "Request login codes, exchange them for tokens, and refresh credentials via AWS Cognito."
+			"description": "Request login codes, exchange them for tokens, and refresh credentials via AWS Cognito.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0cbf0e30-5c39-469b-8951-abcacc09b9c7",
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b514eee-1ddc-48a6-beee-506c9e6a23e8",
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "Pet Feeders (Smart Feed)",
@@ -2275,6 +2304,32 @@
 					}
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "57632c05-3479-4d50-b501-4547be779ebf",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6f43077c-9ede-4076-a594-10a3624ea8c0",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
