@@ -2995,12 +2995,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{petsafe_base_url}}directory/product-sharing",
+							"raw": "{{petsafe_base_url}}directory/account",
 							"host": [
 								"{{petsafe_base_url}}directory"
 							],
 							"path": [
-								"product-sharing"
+								"account"
 							]
 						}
 					},
