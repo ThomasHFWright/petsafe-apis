@@ -372,14 +372,11 @@
 			],
 			"id": "48204051-f45a3be3-d07b-4d36-ac42-ac97f92ec247",
 			"description": "Request login codes, exchange them for tokens, and refresh credentials via AWS Cognito.",
-			"auth": {
-				"type": "noauth"
-			},
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0cbf0e30-5c39-469b-8951-abcacc09b9c7",
+						"id": "61be0ad7-92f6-4e98-9c34-4590b2f40871",
 						"type": "text/javascript",
 						"packages": {},
 						"requests": {},
@@ -391,7 +388,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8b514eee-1ddc-48a6-beee-506c9e6a23e8",
+						"id": "4e9c2d51-ffa0-4c69-98bb-68467273a07b",
 						"type": "text/javascript",
 						"packages": {},
 						"requests": {},
