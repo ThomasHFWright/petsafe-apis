@@ -2194,7 +2194,7 @@
 					]
 				},
 				{
-					"name": "Update Final Act",
+					"name": "Update Final Act to Unlocked",
 					"event": [
 						{
 							"listen": "test",
@@ -2256,7 +2256,7 @@
 					"response": [
 						{
 							"id": "48204051-fbb6d799-6d30-49d5-aa9d-8305ebb37c13",
-							"name": "Update Friendly Name Copy",
+							"name": "Update Final Act",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
