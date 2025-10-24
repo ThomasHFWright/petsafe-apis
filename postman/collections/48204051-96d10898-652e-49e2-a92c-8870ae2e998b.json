@@ -1348,7 +1348,7 @@
 					"response": [
 						{
 							"id": "48204051-4b8dd1f3-7a65-4798-924c-6467d06cb38e",
-							"name": "List Litterboxes",
+							"name": "List SmartDoors",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
