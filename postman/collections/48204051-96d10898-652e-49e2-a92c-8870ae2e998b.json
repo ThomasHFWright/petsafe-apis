@@ -3004,7 +3004,127 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-df809001-25ab-4964-a04e-8df106f88349",
+							"name": "Account Details",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Encoding",
+										"value": "gzip",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text"
+									},
+									{
+										"key": "User-Agent",
+										"value": "my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}directory/account",
+									"host": [
+										"{{petsafe_base_url}}directory"
+									],
+									"path": [
+										"account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Oct 2025 22:16:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2632"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "d0d96bc1-53a6-41b5-856c-15d01cf8dbbe"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "on"
+								},
+								{
+									"key": "x-amzn-Remapped-x-amzn-RequestId",
+									"value": "d440083b-af3e-4069-98fe-ec1cf5dec38a"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000; includeSubDomains; preload"
+								},
+								{
+									"key": "x-amzn-Remapped-Content-Length",
+									"value": "2632"
+								},
+								{
+									"key": "x-amzn-Remapped-Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "S-QfjGr8oAMEdzw="
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "no-sniff"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "*"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-68fbfac9-6f13a5f640b0b30173b4ab76;Parent=777801064d16e674;Sampled=0;Lineage=1:cd904e3f:0"
+								},
+								{
+									"key": "x-amzn-Remapped-Date",
+									"value": "Fri, 24 Oct 2025 22:16:41 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"createdAt\": \"2025-09-12T12:06:41.205Z\",\n        \"createdBy\": \"SERVICE:directory-service\",\n        \"email\": \"thomas.h.f.wright@gmail.com\",\n        \"firstName\": \"Thomas\",\n        \"firstNameRequestFlag\": true,\n        \"updatedAt\": \"2025-10-24T22:13:36.000Z\",\n        \"updatedBy\": \"SERVICE:directory-service\",\n        \"usEast1IdentityId\": \"us-east-1:8dfac9ae-0482-c1da-b2e3-6cd310c6ef05\",\n        \"userData\": {\n            \"consentAgreed\": \"2020-09-01\",\n            \"consentLocale\": \"en_ie\",\n            \"display12HourTime\": true,\n            \"receiveNotifications\": true,\n            \"region\": \"us-east-1\"\n        },\n        \"userId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n        \"receiveNotifications\": true,\n        \"products\": [\n            {\n                \"createdAt\": \"2025-09-14T16:28:43.033Z\",\n                \"createdBy\": \"SERVICE:directory-service\",\n                \"entityData\": {\n                    \"brand\": \"petsafe\",\n                    \"connectionStatus\": \"OFFLINE\",\n                    \"friendlyName\": \"Pet door\",\n                    \"lastSeenOn\": \"2025-10-24T22:15:45.494Z\",\n                    \"productType\": \"smartdoor\",\n                    \"sessionIdentifier\": \"5ac9817d-74a2-41d2-9002-31c389c9a928\"\n                },\n                \"entityType\": \"PRODUCT\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"updatedAt\": \"2025-10-24T22:15:45.494Z\",\n                \"updatedBy\": \"SERVICE:directory-service\",\n                \"entityId\": \"D0176904F8D4\"\n            }\n        ],\n        \"pets\": [\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:30:33.975Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:30:33.975Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"cf7154a7-d0ab-4aa5-8ee6-d281a7788f4b\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:32:19.775Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:32:19.775Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"b871f7f2-82e2-42e1-a37e-4c8691f76934\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:34:04.256Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:34:04.256Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"85236d3c-56ed-4335-9ac8-d053492ad95b\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:33:09.320Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:33:09.320Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:31:19.330Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:31:19.330Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"391dce5b-1ba7-4ff4-b040-12e0ceb70f73\"\n            }\n        ],\n        \"platformApps\": [\n            0\n        ]\n    }\n}"
+						}
+					]
 				}
 			],
 			"id": "48204051-c251a136-3d2a-4268-a8c4-efea796eb71c",
