@@ -1687,15 +1687,15 @@
 							}
 						],
 						"url": {
-							"raw": "{{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/activity",
+							"raw": "{{petsafe_base_url}}smartdoor/product/override/schedules/{{smartdoor_thing_name}}",
 							"host": [
-								"{{petsafe_base_url}}scoopfree"
+								"{{petsafe_base_url}}smartdoor"
 							],
 							"path": [
 								"product",
-								"product",
-								"{{scoopfree_thing_name}}",
-								"activity"
+								"override",
+								"schedules",
+								"{{smartdoor_thing_name}}"
 							]
 						},
 						"description": "Fetch the recent activity log for the litter box."
@@ -1703,7 +1703,7 @@
 					"response": [
 						{
 							"id": "48204051-11552e2b-e82d-4d34-9b39-387ae8247258",
-							"name": "Get Litterbox Activity",
+							"name": "Get Override Schedules",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
