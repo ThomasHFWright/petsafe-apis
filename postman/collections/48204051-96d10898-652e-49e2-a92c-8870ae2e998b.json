@@ -3045,7 +3045,7 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "json",
 							"header": [
 								{
 									"key": "Date",
@@ -3053,7 +3053,9 @@
 								},
 								{
 									"key": "Content-Type",
-									"value": "application/json"
+									"value": "application/json",
+									"description": "",
+									"type": "text"
 								},
 								{
 									"key": "Content-Length",
@@ -3120,9 +3122,15 @@
 									"value": "Fri, 24 Oct 2025 22:16:41 GMT"
 								}
 							],
-							"cookie": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
 							"responseTime": null,
-							"body": "{\n    \"data\": {\n        \"createdAt\": \"2025-09-12T12:06:41.205Z\",\n        \"createdBy\": \"SERVICE:directory-service\",\n        \"email\": \"thomas.h.f.wright@gmail.com\",\n        \"firstName\": \"Thomas\",\n        \"firstNameRequestFlag\": true,\n        \"updatedAt\": \"2025-10-24T22:13:36.000Z\",\n        \"updatedBy\": \"SERVICE:directory-service\",\n        \"usEast1IdentityId\": \"us-east-1:8dfac9ae-0482-c1da-b2e3-6cd310c6ef05\",\n        \"userData\": {\n            \"consentAgreed\": \"2020-09-01\",\n            \"consentLocale\": \"en_ie\",\n            \"display12HourTime\": true,\n            \"receiveNotifications\": true,\n            \"region\": \"us-east-1\"\n        },\n        \"userId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n        \"receiveNotifications\": true,\n        \"products\": [\n            {\n                \"createdAt\": \"2025-09-14T16:28:43.033Z\",\n                \"createdBy\": \"SERVICE:directory-service\",\n                \"entityData\": {\n                    \"brand\": \"petsafe\",\n                    \"connectionStatus\": \"OFFLINE\",\n                    \"friendlyName\": \"Pet door\",\n                    \"lastSeenOn\": \"2025-10-24T22:15:45.494Z\",\n                    \"productType\": \"smartdoor\",\n                    \"sessionIdentifier\": \"5ac9817d-74a2-41d2-9002-31c389c9a928\"\n                },\n                \"entityType\": \"PRODUCT\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"updatedAt\": \"2025-10-24T22:15:45.494Z\",\n                \"updatedBy\": \"SERVICE:directory-service\",\n                \"entityId\": \"D0176904F8D4\"\n            }\n        ],\n        \"pets\": [\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:30:33.975Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:30:33.975Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"cf7154a7-d0ab-4aa5-8ee6-d281a7788f4b\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:32:19.775Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:32:19.775Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"b871f7f2-82e2-42e1-a37e-4c8691f76934\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:34:04.256Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:34:04.256Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"85236d3c-56ed-4335-9ac8-d053492ad95b\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:33:09.320Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:33:09.320Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\n            },\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:31:19.330Z\",\n                \"groupId\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdAt\": \"2025-09-14T16:31:19.330Z\",\n                \"updatedBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"createdBy\": \"cca5f0cb-7f4f-4d54-ac71-9211f53847c8\",\n                \"entityId\": \"391dce5b-1ba7-4ff4-b040-12e0ceb70f73\"\n            }\n        ],\n        \"platformApps\": [\n            0\n        ]\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"createdAt\": \"2025-09-12T12:06:41.205Z\",\n        \"createdBy\": \"SERVICE:directory-service\",\n        \"email\": \"example@example.com\",\n        \"firstName\": \"example-value\",\n        \"firstNameRequestFlag\": true,\n        \"updatedAt\": \"2025-10-24T22:13:36.000Z\",\n        \"updatedBy\": \"SERVICE:directory-service\",\n        \"usEast1IdentityId\": \"us-east-1:example-value\",\n        \"userData\": {\n            \"consentAgreed\": \"2020-09-01\",\n            \"consentLocale\": \"en_ie\",\n            \"display12HourTime\": true,\n            \"receiveNotifications\": true,\n            \"region\": \"us-east-1\"\n        },\n        \"userId\": \"example-value\",\n        \"receiveNotifications\": true,\n        \"products\": [\n            {\n                \"createdAt\": \"2025-09-14T16:28:43.033Z\",\n                \"createdBy\": \"SERVICE:directory-service\",\n                \"entityData\": {\n                    \"brand\": \"petsafe\",\n                    \"connectionStatus\": \"OFFLINE\",\n                    \"friendlyName\": \"Pet door\",\n                    \"lastSeenOn\": \"2025-10-24T22:15:45.494Z\",\n                    \"productType\": \"smartdoor\",\n                    \"sessionIdentifier\": \"example-value\"\n                },\n                \"entityType\": \"PRODUCT\",\n                \"groupId\": \"example-value\",\n                \"updatedAt\": \"2025-10-24T22:15:45.494Z\",\n                \"updatedBy\": \"SERVICE:directory-service\",\n                \"entityId\": \"example-value\"\n            }\n        ],\n        \"pets\": [\n            {\n                \"entityType\": \"PET\",\n                \"entityData\": {},\n                \"updatedAt\": \"2025-09-14T16:30:33.975Z\",\n                \"groupId\": \"example-value\",\n                \"createdAt\": \"2025-09-14T16:30:33.975Z\",\n                \"updatedBy\": \"example-value\",\n                \"createdBy\": \"example-value\",\n                \"entityId\": \"example-value\"\n            }\n        ],\n        \"platformApps\": [\n            0\n        ]\n    }\n}"
 						}
 					]
 				}
