@@ -1937,54 +1937,7 @@
 						},
 						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
 					},
-					"response": [
-						{
-							"id": "48204051-03ad9a87-ed73-448b-b607-6012245496a7",
-							"name": "Lock SmartDoor Copy",
-							"originalRequest": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
-								},
-								"url": {
-									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
-									"host": [
-										"{{petsafe_base_url}}smartdoor"
-									],
-									"path": [
-										"product",
-										"product",
-										"{{smartdoor_thing_name}}",
-										"shadow"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "referrer-policy",
-									"value": "no-referrer"
-								}
-							],
-							"cookie": [],
-							"responseTime": null,
-							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -46\n                },\n                \"door\": {\n                    \"mode\": \"MANUAL_UNLOCKED\",\n                    \"latchState\": \"UNLOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6345,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"door\": {\n                    \"mode\": \"MANUAL_LOCKED\"\n                },\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "SmartDoor Smart mode",
