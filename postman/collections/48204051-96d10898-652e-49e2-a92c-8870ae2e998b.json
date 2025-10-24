@@ -2382,7 +2382,7 @@
 					]
 				},
 				{
-					"name": "Update Final Act to Unlocked Copy",
+					"name": "Update Final Act to Locked",
 					"event": [
 						{
 							"listen": "test",
