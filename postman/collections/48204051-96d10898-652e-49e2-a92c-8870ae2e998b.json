@@ -2759,6 +2759,18 @@
 							"body": "{\n    \"data\": {\n        \"thingName\": \"example-value\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "New Request",
+					"id": "48204051-18a455ce-6771-41d6-bd34-611145ca26e6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "48204051-f4191ac9-a5bc-48ff-a2f1-3631f71044d9",
