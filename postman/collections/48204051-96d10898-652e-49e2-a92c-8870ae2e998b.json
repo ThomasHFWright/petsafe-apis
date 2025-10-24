@@ -1939,39 +1939,6 @@
 					},
 					"response": [
 						{
-							"id": "48204051-97ae300b-5c7c-46f3-aba7-328784985648",
-							"name": "Update Friendly Name",
-							"originalRequest": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"friendlyName\": \"Pet door\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
-									"host": [
-										"{{petsafe_base_url}}preferences"
-									],
-									"path": [
-										"product",
-										"smartdoor",
-										"{{smartdoor_thing_name}}"
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"responseTime": null,
-							"body": null
-						},
-						{
 							"id": "48204051-b11a19f4-9ef9-4c41-8a20-c3db96da7027",
 							"name": "Update Friendly Name",
 							"originalRequest": {
