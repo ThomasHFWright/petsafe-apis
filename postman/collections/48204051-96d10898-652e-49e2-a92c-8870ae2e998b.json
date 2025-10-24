@@ -2958,7 +2958,7 @@
 					]
 				},
 				{
-					"name": "Product Sharing Copy",
+					"name": "Account Details",
 					"id": "48204051-07d05f40-3cef-4b2e-8f4d-336338b166ad",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true,
