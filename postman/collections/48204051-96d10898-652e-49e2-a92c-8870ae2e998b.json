@@ -2770,7 +2770,133 @@
 						"method": "GET",
 						"header": []
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-e003e2e4-8dba-4257-a6d1-f77bb47312d3",
+							"name": "Schedule Conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"My schedule name\",\r\n    \"thingName\": \"D0176904F8D4\",\r\n    \"isEnabled\": true,\r\n    \"dayOfWeek\": \"1110101\",\r\n    \"startTime\": \"10:02\",\r\n    \"access\": 3,\r\n    \"petIds\": [\r\n        \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/schedules",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"schedules"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Oct 2025 22:28:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "149"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "b37d0d5d-5895-45ea-8c4a-f7451a1a8337"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "on"
+								},
+								{
+									"key": "x-amzn-Remapped-x-amzn-RequestId",
+									"value": "1f18d089-663b-4e7a-aff1-b33483ac5044"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000; includeSubDomains; preload"
+								},
+								{
+									"key": "x-amzn-Remapped-Content-Length",
+									"value": "149"
+								},
+								{
+									"key": "x-amzn-Remapped-Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Error from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 024e3e2a85f18d5f1e46b7c4f4f42474.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "fmg-iTLM3jxGBfbGoBIC7UNtfQqxnaZtneU4dBa9xGIEiWWjhQdxNg=="
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "S-SJrE66IAMEFsA="
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "no-sniff"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "*"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-68fbfd70-2c701cf07aa33f1b67df193c;Parent=2c676f118a18b965;Sampled=0;Lineage=1:4952baa9:0"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "IAD55-P1"
+								},
+								{
+									"key": "x-amzn-Remapped-Date",
+									"value": "Fri, 24 Oct 2025 22:28:00 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": {\n        \"message\": \"smartdoor-schedule-conflict\",\n        \"statusCode\": 400,\n        \"detail\": {\n            \"pets\": [\n                \"example-value\"\n            ],\n            \"dayOfWeek\": \"1110101\"\n        }\n    }\n}"
+						}
+					]
 				}
 			],
 			"id": "48204051-f4191ac9-a5bc-48ff-a2f1-3631f71044d9",
