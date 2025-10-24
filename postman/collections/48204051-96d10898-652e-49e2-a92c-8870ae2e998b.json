@@ -2761,6 +2761,195 @@
 					]
 				},
 				{
+					"name": "Update Timezone Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63",
+								"exec": [
+									"pm.test(\"Friendly name updated\", function () {",
+									"    pm.expect(pm.response.code).to.be.within(200, 299);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f36cbedc-aba5-4a29-8227-b9724db7a4eb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "48204051-79486570-05b5-48f7-a55e-afe509d07504",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tz\": \"Europe/London\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
+							"host": [
+								"{{petsafe_base_url}}preferences"
+							],
+							"path": [
+								"product",
+								"smartdoor",
+								"{{smartdoor_thing_name}}"
+							]
+						},
+						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
+					},
+					"response": [
+						{
+							"id": "48204051-83ede768-db4b-4f3b-9246-b0f0a774235e",
+							"name": "Update Timezone",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tz\": \"Europe/London\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"shadow"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Oct 2025 22:23:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "367"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "b36745f7-44df-4efe-9d7b-d9d1c8e6b8b1"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "on"
+								},
+								{
+									"key": "x-amzn-Remapped-x-amzn-RequestId",
+									"value": "303829a9-7a30-47ca-a156-bfc003248842"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000; includeSubDomains; preload"
+								},
+								{
+									"key": "x-amzn-Remapped-Content-Length",
+									"value": "367"
+								},
+								{
+									"key": "x-amzn-Remapped-Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 024e3e2a85f18d5f1e46b7c4f4f42474.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "0Eh2yPyrn4nvKsBose-vdhfvQhhzEd2mtab0qsUUa-5wFc5FXi7VxA=="
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "S-RapH7KIAMEP0A="
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "no-sniff"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "*"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-68fbfc43-76797d101bc4d1b627d31cc7;Parent=7c21a31d4295add7;Sampled=0;Lineage=1:38c3744b:0"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "IAD55-P1"
+								},
+								{
+									"key": "x-amzn-Remapped-Date",
+									"value": "Fri, 24 Oct 2025 22:23:00 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"thingName\": \"example-value\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "Create/Update Schedule",
 					"id": "48204051-18a455ce-6771-41d6-bd34-611145ca26e6",
 					"protocolProfileBehavior": {
