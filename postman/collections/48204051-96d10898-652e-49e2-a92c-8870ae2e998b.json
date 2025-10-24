@@ -2799,7 +2799,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tz\": \"Europe/London\"\n}",
+							"raw": "{\n    \"thingName\": \"example-value\",\n    \"access\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2807,14 +2807,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
+							"raw": "{{petsafe_base_url}}smartdoor/product/override/schedules",
 							"host": [
-								"{{petsafe_base_url}}preferences"
+								"{{petsafe_base_url}}smartdoor"
 							],
 							"path": [
 								"product",
-								"smartdoor",
-								"{{smartdoor_thing_name}}"
+								"override",
+								"schedules"
 							]
 						},
 						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
