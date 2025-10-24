@@ -1513,7 +1513,8 @@
 									"}"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1530,13 +1531,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+							"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}/",
 							"host": [
-								"{{petsafe_base_url}}smartdoor"
+								"{{petsafe_base_url}}preferences"
 							],
 							"path": [
 								"product",
-								"product",
+								"smartdoor",
 								"{{smartdoor_thing_name}}",
 								""
 							]
