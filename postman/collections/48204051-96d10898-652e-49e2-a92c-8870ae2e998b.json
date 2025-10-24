@@ -2756,7 +2756,7 @@
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"data\": {\n        \"thingName\": \"D0176904F8D4\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"thingName\": \"example-value\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
 						}
 					]
 				}
