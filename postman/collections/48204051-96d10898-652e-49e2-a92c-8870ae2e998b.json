@@ -1685,7 +1685,8 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						},
 						{
@@ -1696,7 +1697,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1709,7 +1711,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
@@ -1813,7 +1820,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_UNLOCKED\"\n  }\n}"
+							"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_UNLOCKED\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
@@ -1891,7 +1903,8 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						},
 						{
@@ -1902,7 +1915,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1915,7 +1929,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"door\": {\n    \"mode\": \"SMART\"\n  }\n}"
+							"raw": "{\n  \"door\": {\n    \"mode\": \"SMART\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
