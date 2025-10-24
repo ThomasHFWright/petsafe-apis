@@ -1494,7 +1494,7 @@
 					]
 				},
 				{
-					"name": "Get SmartDoor Details Copy",
+					"name": "Get SmartDoor Preferences",
 					"event": [
 						{
 							"listen": "test",
@@ -1546,7 +1546,7 @@
 					"response": [
 						{
 							"id": "48204051-22d6dfcb-2ffa-4a55-851f-6980a71501a2",
-							"name": "Get Litterbox Details",
+							"name": "Get SmartDoor Preferences",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
