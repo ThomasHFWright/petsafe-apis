@@ -2791,6 +2791,129 @@
 					},
 					"response": [
 						{
+							"id": "48204051-5429b7c0-ada1-47f7-b306-d038b278128a",
+							"name": "Create Schedule",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"My schedule name 2\",\r\n    \"thingName\": \"D0176904F8D4\",\r\n    \"isEnabled\": true,\r\n    \"dayOfWeek\": \"0001010\",\r\n    \"startTime\": \"10:02\",\r\n    \"access\": 3,\r\n    \"petIds\": [\r\n        \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/schedules",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"schedules"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Oct 2025 22:30:20 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1708"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "2d0528b2-b26a-419b-a900-e32e128ff56f"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "on"
+								},
+								{
+									"key": "x-amzn-Remapped-x-amzn-RequestId",
+									"value": "22894382-7b37-40dc-bba0-0b7b44fc7a04"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000; includeSubDomains; preload"
+								},
+								{
+									"key": "x-amzn-Remapped-Content-Length",
+									"value": "1708"
+								},
+								{
+									"key": "x-amzn-Remapped-Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 024e3e2a85f18d5f1e46b7c4f4f42474.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "voiSGuuixkJEaxurINBpgrab_SW86kKWyacpA3fVI-eIlvE_WrutQA=="
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "S-SfXFnfIAMEhhA="
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "no-sniff"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "*"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-68fbfdfb-06820d166ebf7fd3650055c8;Parent=4b4b41efd943e209;Sampled=0;Lineage=1:4952baa9:0"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "IAD55-P1"
+								},
+								{
+									"key": "x-amzn-Remapped-Date",
+									"value": "Fri, 24 Oct 2025 22:30:20 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"thingName\": \"D0176904F8D4\",\n            \"petIds\": [\n                \"85236d3c-56ed-4335-9ac8-d053492ad95b\",\n                \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\n            ],\n            \"scheduleId\": \"ce28b085-bfbe-4298-8d64-f278b3b17221\",\n            \"startTime\": \"00:00\",\n            \"access\": 3,\n            \"dayOfWeek\": \"1111111\",\n            \"scheduleType\": \"SMART\",\n            \"isEnabled\": true,\n            \"title\": \"Dogs in and out\",\n            \"nextActionAt\": 1761346800000,\n            \"prevActionAt\": 1761260459000\n        },\n        {\n            \"thingName\": \"D0176904F8D4\",\n            \"petIds\": [\n                \"b871f7f2-82e2-42e1-a37e-4c8691f76934\",\n                \"391dce5b-1ba7-4ff4-b040-12e0ceb70f73\",\n                \"cf7154a7-d0ab-4aa5-8ee6-d281a7788f4b\"\n            ],\n            \"scheduleId\": \"e7b97b6f-bd3e-402a-a0f9-337ec1990553\",\n            \"startTime\": \"08:00\",\n            \"access\": 3,\n            \"dayOfWeek\": \"1111111\",\n            \"scheduleType\": \"SMART\",\n            \"isEnabled\": true,\n            \"title\": \"Cats outside\",\n            \"nextActionAt\": 1761375600000,\n            \"prevActionAt\": 1761289259000\n        },\n        {\n            \"thingName\": \"D0176904F8D4\",\n            \"petIds\": [\n                \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\n            ],\n            \"scheduleId\": \"b524b6b6-5047-40f3-8308-682035624061\",\n            \"startTime\": \"10:02\",\n            \"access\": 3,\n            \"dayOfWeek\": \"1110101\",\n            \"scheduleType\": \"SMART\",\n            \"isEnabled\": true,\n            \"title\": \"My schedule name\",\n            \"nextActionAt\": 1761382920000,\n            \"prevActionAt\": 1761210179000\n        },\n        {\n            \"thingName\": \"D0176904F8D4\",\n            \"petIds\": [\n                \"427ad82d-d432-4780-a8d2-0f2c29fe147c\"\n            ],\n            \"scheduleId\": \"138dfe18-31f2-4dcb-a57a-6d12b1fd4cc6\",\n            \"startTime\": \"10:02\",\n            \"access\": 3,\n            \"dayOfWeek\": \"0001010\",\n            \"scheduleType\": \"SMART\",\n            \"isEnabled\": true,\n            \"title\": \"My schedule name 2\",\n            \"nextActionAt\": 1761732120000,\n            \"prevActionAt\": 1761296579000\n        },\n        {\n            \"thingName\": \"D0176904F8D4\",\n            \"petIds\": [\n                \"b871f7f2-82e2-42e1-a37e-4c8691f76934\",\n                \"391dce5b-1ba7-4ff4-b040-12e0ceb70f73\"\n            ],\n            \"scheduleId\": \"e63d8193-c81f-4d03-bb6d-7d3456aa290b\",\n            \"startTime\": \"19:30\",\n            \"access\": 2,\n            \"dayOfWeek\": \"1111111\",\n            \"scheduleType\": \"SMART\",\n            \"isEnabled\": true,\n            \"title\": \"Cats in at night\",\n            \"nextActionAt\": 1761417000000,\n            \"prevActionAt\": 1761330659000\n        }\n    ]\n}"
+						},
+						{
 							"id": "48204051-e003e2e4-8dba-4257-a6d1-f77bb47312d3",
 							"name": "Schedule Conflict",
 							"originalRequest": {
