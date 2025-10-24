@@ -2761,7 +2761,7 @@
 					]
 				},
 				{
-					"name": "Create Schedule",
+					"name": "Create/Update Schedule",
 					"id": "48204051-18a455ce-6771-41d6-bd34-611145ca26e6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
