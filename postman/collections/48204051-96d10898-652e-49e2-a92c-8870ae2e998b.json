@@ -2771,7 +2771,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"My schedule name\",\r\n    \"thingName\": \"example-value\",\r\n    \"isEnabled\": true,\r\n    \"dayOfWeek\": \"1110101\",\r\n    \"startTime\": \"10:02\",\r\n    \"access\": 3,\r\n    \"petIds\": [\r\n        \"example-value\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"title\": \"My schedule name\",\r\n    \"thingName\": \"example-value\",\r\n    \"isEnabled\": true,\r\n    \"dayOfWeek\": \"0001010\",\r\n    \"startTime\": \"10:02\",\r\n    \"access\": 3,\r\n    \"petIds\": [\r\n        \"example-value\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
