@@ -1785,7 +1785,7 @@
 					"response": [
 						{
 							"id": "48204051-119b1287-e5b7-4111-b0a3-b675c29b34ca",
-							"name": "Get Override Schedules",
+							"name": "Get Schedules",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
