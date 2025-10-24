@@ -2618,15 +2618,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+							"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
 							"host": [
-								"{{petsafe_base_url}}smartdoor"
+								"{{petsafe_base_url}}preferences"
 							],
 							"path": [
 								"product",
-								"product",
-								"{{smartdoor_thing_name}}",
-								"shadow"
+								"smartdoor",
+								"{{smartdoor_thing_name}}"
 							]
 						},
 						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
@@ -2757,7 +2756,7 @@
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -42\n                },\n                \"door\": {\n                    \"mode\": \"SMART\",\n                    \"latchState\": \"LOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6329,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"thingName\": \"D0176904F8D4\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
 						}
 					]
 				}
