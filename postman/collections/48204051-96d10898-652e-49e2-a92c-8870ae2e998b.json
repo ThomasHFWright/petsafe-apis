@@ -3049,7 +3049,7 @@
 					]
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Schedule",
 					"id": "48204051-bf437534-60b2-4432-9e2b-90e133e2ff67",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
