@@ -2420,7 +2420,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"power\": {\n        \"finalAct\": \"UNLOCKED\"\n    }\n}",
+							"raw": "{\n    \"power\": {\n        \"finalAct\": \"LOCKED\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
