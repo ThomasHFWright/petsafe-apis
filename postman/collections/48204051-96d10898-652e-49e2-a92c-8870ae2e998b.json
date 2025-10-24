@@ -2410,12 +2410,13 @@
 					"script": {
 						"id": "ac6b956d-52a3-43b8-843d-748bb6ad4c63",
 						"exec": [
-							"pm.test(\"Setting updated\", function () {",
+							"pm.test(\"Friendly name updated\", function () {",
 							"    pm.expect(pm.response.code).to.be.within(200, 299);",
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				},
 				{
@@ -2426,7 +2427,8 @@
 							""
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -2439,18 +2441,22 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"door\": {\n    \"mode\": \"MANUAL_LOCKED\"\n  }\n}"
+					"raw": "{\n    \"data\": {\n        \"thingName\": \"D0176904F8D4\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/Lisbon\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+					"raw": "{{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}",
 					"host": [
-						"{{petsafe_base_url}}smartdoor"
+						"{{petsafe_base_url}}preferences"
 					],
 					"path": [
 						"product",
-						"product",
-						"{{smartdoor_thing_name}}",
-						"shadow"
+						"smartdoor",
+						"{{smartdoor_thing_name}}"
 					]
 				},
 				"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
