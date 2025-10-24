@@ -2761,7 +2761,7 @@
 					]
 				},
 				{
-					"name": "Update Timezone Copy",
+					"name": "Override Schedule",
 					"event": [
 						{
 							"listen": "test",
