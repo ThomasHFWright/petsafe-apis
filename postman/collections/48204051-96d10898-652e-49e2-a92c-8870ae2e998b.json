@@ -2631,7 +2631,135 @@
 						},
 						"description": "Patch a single setting on the litter box. For string values, wrap the environment variable value in quotes manually before sending."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "48204051-024b294a-311a-417a-a714-859395b9bce9",
+							"name": "Update Timezone",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tz\": \"Europe/London\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										"shadow"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Oct 2025 22:23:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "367"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "b36745f7-44df-4efe-9d7b-d9d1c8e6b8b1"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "on"
+								},
+								{
+									"key": "x-amzn-Remapped-x-amzn-RequestId",
+									"value": "303829a9-7a30-47ca-a156-bfc003248842"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000; includeSubDomains; preload"
+								},
+								{
+									"key": "x-amzn-Remapped-Content-Length",
+									"value": "367"
+								},
+								{
+									"key": "x-amzn-Remapped-Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 024e3e2a85f18d5f1e46b7c4f4f42474.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "0Eh2yPyrn4nvKsBose-vdhfvQhhzEd2mtab0qsUUa-5wFc5FXi7VxA=="
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "S-RapH7KIAMEP0A="
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "no-sniff"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "*"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-68fbfc43-76797d101bc4d1b627d31cc7;Parent=7c21a31d4295add7;Sampled=0;Lineage=1:38c3744b:0"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "IAD55-P1"
+								},
+								{
+									"key": "x-amzn-Remapped-Date",
+									"value": "Fri, 24 Oct 2025 22:23:00 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"state\": {\n            \"reported\": {\n                \"productVariant\": \"MEDIUM\",\n                \"connectionStatus\": \"online\",\n                \"systemStatus\": {\n                    \"firmware\": \"v2.1.12\",\n                    \"rssi\": -42\n                },\n                \"door\": {\n                    \"mode\": \"SMART\",\n                    \"latchState\": \"LOCKED\",\n                    \"errorState\": \"NONE\"\n                },\n                \"power\": {\n                    \"hasAdapter\": true,\n                    \"batteryLevel\": 100,\n                    \"batteryVoltage\": 6329,\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            },\n            \"desired\": {\n                \"power\": {\n                    \"thresholds\": [\n                        4500,\n                        4300,\n                        4150\n                    ],\n                    \"finalAct\": \"UNLOCKED\"\n                }\n            }\n        }\n    }\n}"
+						}
+					]
 				}
 			],
 			"id": "48204051-f4191ac9-a5bc-48ff-a2f1-3631f71044d9",
