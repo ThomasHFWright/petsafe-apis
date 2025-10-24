@@ -1751,7 +1751,7 @@
 					]
 				},
 				{
-					"name": "Get Override Schedules Copy",
+					"name": "Get Schedules",
 					"id": "48204051-f8d8c7b7-87e2-44df-8487-2dacac7866ad",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
