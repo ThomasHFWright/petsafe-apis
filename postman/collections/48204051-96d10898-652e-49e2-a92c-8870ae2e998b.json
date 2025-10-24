@@ -1672,6 +1672,106 @@
 					]
 				},
 				{
+					"name": "Get SmartDoor Preferences Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "defc9ee3-0f01-4dd2-9c91-b0b05c54fd3c",
+								"exec": [
+									"pm.test(\"Litterbox detail loaded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const details = pm.response.json();",
+									"if (details && details.thingName) {",
+									"    pm.environment.set(\"smartdoor_thing_name\", details.thingName);",
+									"}",
+									"if (details && details.productId) {",
+									"    pm.environment.set(\"smartdoor_last_product_id\", details.productId.toString());",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "48204051-44cc0465-3647-4634-a4f9-c4a5aef997aa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+							"host": [
+								"{{petsafe_base_url}}smartdoor"
+							],
+							"path": [
+								"product",
+								"product",
+								"{{smartdoor_thing_name}}",
+								""
+							]
+						},
+						"description": "Retrieve current state for the selected ScoopFree unit."
+					},
+					"response": [
+						{
+							"id": "48204051-8d100ba2-e2ee-4d5d-bc55-ba785771cea7",
+							"name": "Get SmartDoor Preferences",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/",
+									"host": [
+										"{{petsafe_base_url}}smartdoor"
+									],
+									"path": [
+										"product",
+										"product",
+										"{{smartdoor_thing_name}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": {\n        \"thingName\": \"example-value\",\n        \"productType\": \"smartdoor\",\n        \"preferenceData\": {\n            \"friendlyName\": \"Pet door\",\n            \"tz\": \"Europe/London\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "Lock SmartDoor",
 					"event": [
 						{
