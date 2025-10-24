@@ -2956,6 +2956,123 @@
 							"body": "{\n    \"data\": [\n        {\n            \"email\": \"example@example.com\",\n            \"ownerId\": \"example-value\",\n            \"userId\": \"example-value\",\n            \"nickname\": \"example@example.com\",\n            \"status\": \"shared\"\n        }\n    ]\n}"
 						}
 					]
+				},
+				{
+					"name": "Product Sharing Copy",
+					"id": "48204051-07d05f40-3cef-4b2e-8f4d-336338b166ad",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{petsafe_base_url}}directory/product-sharing",
+							"host": [
+								"{{petsafe_base_url}}directory"
+							],
+							"path": [
+								"product-sharing"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "48204051-208899ed-df93-485a-9ad2-3ff7a0fcb0b6",
+							"name": "Product Sharing",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Encoding",
+										"value": "gzip",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text"
+									},
+									{
+										"key": "User-Agent",
+										"value": "my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{petsafe_base_url}}directory/product-sharing",
+									"host": [
+										"{{petsafe_base_url}}directory"
+									],
+									"path": [
+										"product-sharing"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"email\": \"example@example.com\",\n            \"ownerId\": \"example-value\",\n            \"userId\": \"example-value\",\n            \"nickname\": \"example@example.com\",\n            \"status\": \"shared\"\n        }\n    ]\n}"
+						}
+					]
 				}
 			],
 			"id": "48204051-c251a136-3d2a-4268-a8c4-efea796eb71c",
