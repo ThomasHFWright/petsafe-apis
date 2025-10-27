@@ -328,6 +328,24 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
   }
   ```
 
+### Get SmartDoor Preferences
+- **Method & URL:** `GET {{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}/`
+- **Headers:** `Accept: application/json`
+- **Example response (truncated):**
+  ```json
+  {
+    "data": {
+      "thingName": "example-value",
+      "productType": "smartdoor",
+      "preferenceData": {
+        "friendlyName": "Pet door",
+        "tz": "Europe/London"
+      }
+    }
+  }
+  ```
+- **Notes:** Returns user-editable preferences such as the displayed device name and configured timezone.
+
 ### Get SmartDoor Activity
 - **Method & URL:** `GET {{petsafe_base_url}}scoopfree/product/product/{{scoopfree_thing_name}}/activity`
 - **Description:** The collection maps SmartDoor activity to the same path shape used by ScoopFree. It returns timestamped `code` entries describing schedule actions.
@@ -347,6 +365,40 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
     ]
   }
   ```
+
+### Get SmartDoor Schedules
+- **Method & URL:** `GET {{petsafe_base_url}}smartdoor/product/schedules?thingName={{smartdoor_thing_name}}`
+- **Headers:** `Accept: application/json`
+- **Example response (truncated):**
+  ```json
+  {
+    "data": [
+      {
+        "scheduleId": "example-value",
+        "title": "Dogs in and out",
+        "startTime": "00:00",
+        "dayOfWeek": "1111111",
+        "access": 3,
+        "isEnabled": true
+      }
+    ]
+  }
+  ```
+- **Notes:** Lists every schedule associated with the door, including pet assignments, enabled flags, and next/previous action timestamps.
+
+### Get Override Schedules
+- **Method & URL:** `GET {{petsafe_base_url}}smartdoor/product/override/schedules/{{smartdoor_thing_name}}`
+- **Headers:** `Accept: application/json`
+- **Example response:**
+  ```json
+  {
+    "data": {
+      "thingName": "example-value",
+      "access": 0
+    }
+  }
+  ```
+- **Notes:** Retrieves the currently applied temporary override access level (0 = locked, 3 = unlocked for all pets).
 
 ### Lock SmartDoor
 - **Method & URL:** `PATCH {{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow`
@@ -437,6 +489,181 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
   }
   ```
 
+
+### Update SmartDoor Friendly Name
+- **Method & URL:** `PATCH {{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}`
+- **Body:**
+  ```json
+  {
+    "friendlyName": "Pet door"
+  }
+  ```
+- **Example response (truncated):**
+  ```json
+  {
+    "data": {
+      "preferenceData": {
+        "friendlyName": "Pet door",
+        "tz": "Europe/London"
+      }
+    }
+  }
+  ```
+- **Notes:** Updates the label shown in the mobile app without altering schedules or access rules.
+
+### Update SmartDoor Timezone
+- **Method & URL:** `PATCH {{petsafe_base_url}}preferences/product/smartdoor/{{smartdoor_thing_name}}`
+- **Body:**
+  ```json
+  {
+    "tz": "Europe/London"
+  }
+  ```
+- **Example response:**
+  ```json
+  {
+    "data": {
+      "preferenceData": {
+        "friendlyName": "Pet door",
+        "tz": "Europe/London"
+      }
+    }
+  }
+  ```
+- **Notes:** Sets the timezone that schedule start times are interpreted against.
+
+### Set Final Act to Unlocked
+- **Method & URL:** `PATCH {{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow`
+- **Body:**
+  ```json
+  {
+    "power": {
+      "finalAct": "UNLOCKED"
+    }
+  }
+  ```
+- **Example response (truncated):**
+  ```json
+  {
+    "data": {
+      "state": {
+        "desired": {
+          "power": {
+            "finalAct": "UNLOCKED"
+          }
+        }
+      }
+    }
+  }
+  ```
+- **Notes:** Controls how the door should behave when power is critically low or restored.
+
+### Set Final Act to Locked
+- **Method & URL:** `PATCH {{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow`
+- **Body:**
+  ```json
+  {
+    "power": {
+      "finalAct": "LOCKED"
+    }
+  }
+  ```
+- **Example response (truncated):**
+  ```json
+  {
+    "data": {
+      "state": {
+        "desired": {
+          "power": {
+            "finalAct": "LOCKED"
+          }
+        }
+      }
+    }
+  }
+  ```
+- **Notes:** Sets the door to lock itself during the final act condition (for example when batteries are depleted).
+
+### Apply Override Schedule Access
+- **Method & URL:** `PATCH {{petsafe_base_url}}smartdoor/product/override/schedules`
+- **Body:**
+  ```json
+  {
+    "thingName": "example-value",
+    "access": 0
+  }
+  ```
+- **Example response:**
+  ```json
+  {
+    "data": {
+      "thingName": "example-value",
+      "access": 0
+    }
+  }
+  ```
+- **Notes:** Temporarily overrides the standard schedules with the supplied access level until cleared or expired.
+
+### Create or Update SmartDoor Schedule
+- **Method & URL:** `POST {{petsafe_base_url}}smartdoor/product/schedules`
+- **Body:**
+  ```json
+  {
+    "title": "My schedule name",
+    "thingName": "example-value",
+    "isEnabled": true,
+    "dayOfWeek": "0001010",
+    "startTime": "10:02",
+    "access": 3,
+    "petIds": [
+      "example-value"
+    ]
+  }
+  ```
+- **Example response (truncated):**
+  ```json
+  {
+    "data": [
+      {
+        "scheduleId": "example-value",
+        "title": "Dogs in and out",
+        "dayOfWeek": "1111111"
+      }
+    ]
+  }
+  ```
+- **Notes:** Creates a new schedule or updates an existing entry when a `scheduleId` is included in the payload.
+
+### Delete SmartDoor Schedule
+- **Method & URL:** `DELETE {{petsafe_base_url}}smartdoor/product/schedules/{{smartdoor_schedule_id}}`
+- **Body:**
+  ```json
+  {
+    "title": "My schedule name",
+    "thingName": "example-value",
+    "isEnabled": true,
+    "dayOfWeek": "1110101",
+    "startTime": "10:02",
+    "access": 3,
+    "petIds": [
+      "example-value"
+    ]
+  }
+  ```
+- **Example response (truncated):**
+  ```json
+  {
+    "data": [
+      {
+        "scheduleId": "example-value",
+        "title": "Dogs in and out",
+        "dayOfWeek": "1111111"
+      }
+    ]
+  }
+  ```
+- **Notes:** Removes the targeted schedule and returns the remaining entries for confirmation.
+
 ## Pets and Directory APIs
 
 ### List Pets
@@ -502,6 +729,38 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
     ]
   }
   ```
+
+
+### Account Details
+- **Method & URL:** `GET {{petsafe_base_url}}directory/account`
+- **Headers:**
+  - `Accept-Encoding: gzip`
+  - `Content-Type: application/json`
+  - `Cache-Control: no-cache`
+  - `User-Agent: my PetSafe Code Version: 132 App Version: 1.19.1 Stage: Production Device: Google sdk_gphone64_x86_64 Android: Android SDK: 36 (16)`
+- **Example response (truncated):**
+  ```json
+  {
+    "data": {
+      "email": "example@example.com",
+      "userId": "example-value",
+      "userData": {
+        "display12HourTime": true,
+        "receiveNotifications": true,
+        "region": "us-east-1"
+      },
+      "products": [
+        {
+          "entityData": {
+            "friendlyName": "Pet door",
+            "productType": "smartdoor"
+          }
+        }
+      ]
+    }
+  }
+  ```
+- **Notes:** Returns account profile settings along with linked product and pet identifiers.
 
 ## Usage Tips
 
