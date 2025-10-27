@@ -437,7 +437,7 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
   ```json
   {
     "door": {
-      "mode": "MANUAL_LOCKED"
+      "mode": "MANUAL_UNLOCKED"
     }
   }
   ```
@@ -446,6 +446,11 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
   {
     "data": {
       "state": {
+        "desired": {
+          "door": {
+            "mode": "MANUAL_UNLOCKED"
+          }
+        },
         "reported": {
           "door": {
             "mode": "MANUAL_LOCKED",
@@ -456,7 +461,7 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
     }
   }
   ```
-- **Notes:** The Postman collection stores the same payload as the lock request. In practice you should send `"mode": "MANUAL_UNLOCKED"` to release the latch.
+- **Notes:** Sends the unlock command; the reported state will reflect the updated latch position once the door has fully cycled.
 
 ### Smart Mode
 - **Method & URL:** `PATCH {{petsafe_base_url}}smartdoor/product/product/{{smartdoor_thing_name}}/shadow`
@@ -475,7 +480,7 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
       "state": {
         "desired": {
           "door": {
-            "mode": "MANUAL_LOCKED"
+            "mode": "SMART"
           }
         },
         "reported": {
@@ -488,6 +493,8 @@ SmartDoor calls live under `{{petsafe_base_url}}smartdoor/product/product`. The 
     }
   }
   ```
+
+- **Notes:** After issuing the SMART command, the reported mode remains `MANUAL_UNLOCKED` until the door finishes transitioning.
 
 
 ### Update SmartDoor Friendly Name
